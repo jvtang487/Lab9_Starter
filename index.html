@@ -180,8 +180,58 @@
       const fourth = () => { console.trace(); };
       first();
     });
-    //tigger a global error
+
+    //try catch throw
+    try {
+
+      console.log('Start of try runs');  // (1) <--
     
+      lalala; // error, variable is not defined!
+    
+      console.log('End of try (never reached)');  // (2)
+    
+    } catch (err) {
+    
+      console.log(`Error has occurred!`); // (3) <--
+    
+    }
+
+    let json = '{"name": "jason"}'
+    try{
+      let user = JSON.parse(json); // <-- no errors
+
+    if (!user.age) {
+      throw new SyntaxError("Incomplete data: no age"); // (*)
+    }
+
+    console.log( user.name );
+
+    } catch (err) {
+      console.log( "JSON Error: " + err.message ); // JSON Error: Incomplete data: no name
+    }
+
+    class testError extends Error {
+      constructor(message) {
+        super(message); // (1)
+        this.name = "testError"; // (2)
+      }
+    }
+    
+    function test() {
+      throw new testError("Whoops!");
+    }
+    
+    try {
+      test();
+    } catch(err) {
+      console.log(err.message); // Whoops!
+      console.log(err.name); // testError
+    }
+    //tigger a global error
+    errorBtns[14].addEventListener("click", () => {
+      window.onerror = new SyntaxError;
+      console.log(window.onerror);
+    });
   </script>
 </body>
 
